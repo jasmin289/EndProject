@@ -1,4 +1,4 @@
-﻿namespace EndProject.API.Models.DTO.Collections
+﻿namespace EndProject.API.Models.DTO
 {
     public class Hobby
     {

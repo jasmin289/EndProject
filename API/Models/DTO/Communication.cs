@@ -1,6 +1,6 @@
-﻿using EndProject.API.Models.DTO.Collections.enums;
+﻿using EndProject.API.Models.DTO.enums;
 
-namespace EndProject.API.Models.DTO.Collections
+namespace EndProject.API.Models.DTO
 {
     public class Communication
     {
@@ -16,7 +16,7 @@ namespace EndProject.API.Models.DTO.Collections
         public DateTime Created { get; set; }
 
         public CommunicationType Type { get; set; }
-        
+
         public CommunicationStatus stsus { get; set; }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace EndProject.API.Models.DTO.Collections.enums
+﻿namespace EndProject.API.Models.DTO.enums
 {
     public enum LanguageLevel
     {
@@ -6,6 +6,6 @@
         Low = 1,
         Medium = 2,
         High = 3,
-        
+
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace EndProject.API.Models.DTO.Collections.enums
+﻿namespace EndProject.API.Models.DTO.enums
 {
     public enum CommunicationStatus
     {

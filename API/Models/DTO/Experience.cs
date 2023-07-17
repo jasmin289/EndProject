@@ -1,9 +1,9 @@
-﻿namespace EndProject.API.Models.DTO.Collections
+﻿namespace EndProject.API.Models.DTO
 {
     public class Experience
     {
         public int ID { get; set; }
-        public string  CompanyName { get; set; }
+        public string CompanyName { get; set; }
         public string CompnyURL { get; set; }
         public string CompnyLogoURL { get; set; }
         public string JobTitle { get; set; }
