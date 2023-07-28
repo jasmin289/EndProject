@@ -9,17 +9,8 @@
         public string URL { get; set; }
         public string GitURL { get; set; }
 
-        public List<ProgramingSkills> SkillsUsed { get; set; }
+        public List<ProgramingSkills> Skills { get; set; }
 
     }
-    public class ProjectGallry
-    {
-        public int ID { get; set; }
-        public string URL { get; set; }
-        public string Alt { get; set; }
-
-        public string Titel { get; set; }
-        public string Description { get; set; }
-
-    }
+  
 }

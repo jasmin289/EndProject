@@ -7,5 +7,10 @@
         public string Category { get; set; }
 
         public DateTime KnownFrom { get; set; }
+        public List<Project> Projects { get; set; }
+
+        public List<Education> Education { get; set; }
+    
+    
     }
 }

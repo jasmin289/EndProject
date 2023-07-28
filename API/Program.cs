@@ -1,3 +1,6 @@
+using EndProject.API.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace API
 {
     public class Program
@@ -5,7 +8,10 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
+            builder.Services.AddDbContext<MainContex>(o => {
+                o.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -15,12 +21,18 @@ namespace API
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //this code make sure that the DB is up to date every time the api start.
+            using (var scop = app.Services.CreateScope())
             {
+                var context = scop.ServiceProvider.GetRequiredService<MainContex>();
+                context.Database.Migrate(); 
+            }
+
+            // Configure the HTTP request pipeline.
+           
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+           
 
             app.UseHttpsRedirection();
 
