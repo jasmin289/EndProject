@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EndProject.API.Migrations
 {
     [DbContext(typeof(MainContex))]
-    [Migration("20230728090955_init")]
+    [Migration("20230729132824_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,12 +29,12 @@ namespace EndProject.API.Migrations
                     b.Property<int>("EducationID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillsId")
+                    b.Property<int>("SkillsID")
                         .HasColumnType("int");
 
-                    b.HasKey("EducationID", "SkillsId");
+                    b.HasKey("EducationID", "SkillsID");
 
-                    b.HasIndex("SkillsId");
+                    b.HasIndex("SkillsID");
 
                     b.ToTable("EducationProgramingSkills");
                 });
@@ -221,15 +221,18 @@ namespace EndProject.API.Migrations
 
             modelBuilder.Entity("EndProject.API.Models.DTO.ProgramingSkills", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Display")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("KnownFrom")
                         .HasColumnType("datetime2");
@@ -238,9 +241,35 @@ namespace EndProject.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("ProgramingSkills");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Category = "Back end",
+                            Display = true,
+                            KnownFrom = new DateTime(2022, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3899),
+                            Name = "C#"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Category = "Front end",
+                            Display = true,
+                            KnownFrom = new DateTime(2021, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3905),
+                            Name = "JavaScript"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Category = "front end",
+                            Display = true,
+                            KnownFrom = new DateTime(2020, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3908),
+                            Name = "PHP"
+                        });
                 });
 
             modelBuilder.Entity("EndProject.API.Models.DTO.Project", b =>
@@ -270,6 +299,24 @@ namespace EndProject.API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Project");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Description = "finel",
+                            GitURL = "https://github.com/jasmin289/EndProject",
+                            Name = "End Project",
+                            URL = "jkdjkdj"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "finel",
+                            GitURL = "https://github.com/jasmin289/EndProject",
+                            Name = "End Project",
+                            URL = "jkdjkdj"
+                        });
                 });
 
             modelBuilder.Entity("EndProject.API.Models.DTO.ProjectGallry", b =>
@@ -304,6 +351,17 @@ namespace EndProject.API.Migrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectGallry");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Alt = "??",
+                            Description = "nice pic",
+                            ProjectID = 1,
+                            Titel = "a pic of a dog",
+                            URL = "https://picsum.photos/id/237/200/300"
+                        });
                 });
 
             modelBuilder.Entity("EndProject.API.Models.DTO.SocialNetWork", b =>
@@ -356,21 +414,58 @@ namespace EndProject.API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            LastLogin = new DateTime(2023, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3566),
+                            Password = "1234",
+                            Type = 999,
+                            UserName = "jasmin"
+                        });
                 });
 
-            modelBuilder.Entity("ProgramingSkillsProject", b =>
+            modelBuilder.Entity("ProgrammingSkills", b =>
                 {
+                    b.Property<int>("SkillsID")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProjectsID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillsId")
-                        .HasColumnType("int");
+                    b.HasKey("SkillsID", "ProjectsID");
 
-                    b.HasKey("ProjectsID", "SkillsId");
+                    b.HasIndex("ProjectsID");
 
-                    b.HasIndex("SkillsId");
+                    b.ToTable("ProgrammingSkills");
 
-                    b.ToTable("ProgramingSkillsProject");
+                    b.HasData(
+                        new
+                        {
+                            SkillsID = 1,
+                            ProjectsID = 1
+                        },
+                        new
+                        {
+                            SkillsID = 2,
+                            ProjectsID = 1
+                        },
+                        new
+                        {
+                            SkillsID = 3,
+                            ProjectsID = 1
+                        },
+                        new
+                        {
+                            SkillsID = 2,
+                            ProjectsID = 2
+                        },
+                        new
+                        {
+                            SkillsID = 3,
+                            ProjectsID = 2
+                        });
                 });
 
             modelBuilder.Entity("EducationProgramingSkills", b =>
@@ -383,7 +478,7 @@ namespace EndProject.API.Migrations
 
                     b.HasOne("EndProject.API.Models.DTO.ProgramingSkills", null)
                         .WithMany()
-                        .HasForeignKey("SkillsId")
+                        .HasForeignKey("SkillsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -397,7 +492,7 @@ namespace EndProject.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProgramingSkillsProject", b =>
+            modelBuilder.Entity("ProgrammingSkills", b =>
                 {
                     b.HasOne("EndProject.API.Models.DTO.Project", null)
                         .WithMany()
@@ -407,7 +502,7 @@ namespace EndProject.API.Migrations
 
                     b.HasOne("EndProject.API.Models.DTO.ProgramingSkills", null)
                         .WithMany()
-                        .HasForeignKey("SkillsId")
+                        .HasForeignKey("SkillsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

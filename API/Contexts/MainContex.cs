@@ -18,7 +18,8 @@ namespace EndProject.API.Contexts
                 new User { ID = 1, UserName = "jasmin", Password = "1234", LastLogin = DateTime.Now, Type = UserType.Admin }
                 );
             modelBuilder.Entity<Project>().HasData(
-               new Project { ID = 1, Name = "End Project", Description = "finel", URL = "jkdjkdj", GitURL = "https://github.com/jasmin289/EndProject" }
+               new Project { ID = 1, Name = "End Project", Description = "finel", URL = "jkdjkdj", GitURL = "https://github.com/jasmin289/EndProject" },
+               new Project { ID = 2, Name = "End Project", Description = "finel", URL = "jkdjkdj", GitURL = "https://github.com/jasmin289/EndProject" }
 
                );
             modelBuilder.Entity<ProjectGallry>().HasData(new ProjectGallry
@@ -40,18 +41,18 @@ namespace EndProject.API.Contexts
                 .WithMany(s => s.Projects)
                 .UsingEntity<Dictionary<int, int>>
                 (
-                "ProgramingSkillsProject",
-                 r => r.HasOne<ProgramingSkills>().WithMany().HasForeignKey("SkillsId"),
+                "ProgrammingSkills",
+                 r => r.HasOne<ProgramingSkills>().WithMany().HasForeignKey("SkillsID"),
                  l => l.HasOne<Project>().WithMany().HasForeignKey("ProjectsID"),
                  J =>
                  {
-                     J.HasKey("SkillsId", "ProjectsID");
+                     J.HasKey("SkillsID", "ProjectsID");
                      J.HasData(
-                         new { ProjectsID = 1, SkillsId = 1 },
-                         new { ProjectsID = 1, SkillsId = 2 },
-                         new { ProjectsID = 1, SkillsId = 3 },
-                         new { ProjectsID = 2, SkillsId = 2 },
-                         new { ProjectsID = 2, SkillsId = 3 }
+                         new { ProjectsID = 1, SkillsID = 1 },
+                         new { ProjectsID = 1, SkillsID = 2 },
+                         new { ProjectsID = 1, SkillsID = 3 },
+                         new { ProjectsID = 2, SkillsID = 2 },
+                         new { ProjectsID = 2, SkillsID = 3 }
 
                    );
                  });

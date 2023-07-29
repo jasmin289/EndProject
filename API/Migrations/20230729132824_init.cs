@@ -121,15 +121,16 @@ namespace EndProject.API.Migrations
                 name: "ProgramingSkills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KnownFrom = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    KnownFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Display = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProgramingSkills", x => x.Id);
+                    table.PrimaryKey("PK_ProgramingSkills", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,11 +185,11 @@ namespace EndProject.API.Migrations
                 columns: table => new
                 {
                     EducationID = table.Column<int>(type: "int", nullable: false),
-                    SkillsId = table.Column<int>(type: "int", nullable: false)
+                    SkillsID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EducationProgramingSkills", x => new { x.EducationID, x.SkillsId });
+                    table.PrimaryKey("PK_EducationProgramingSkills", x => new { x.EducationID, x.SkillsID });
                     table.ForeignKey(
                         name: "FK_EducationProgramingSkills_Education_EducationID",
                         column: x => x.EducationID,
@@ -196,31 +197,31 @@ namespace EndProject.API.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EducationProgramingSkills_ProgramingSkills_SkillsId",
-                        column: x => x.SkillsId,
+                        name: "FK_EducationProgramingSkills_ProgramingSkills_SkillsID",
+                        column: x => x.SkillsID,
                         principalTable: "ProgramingSkills",
-                        principalColumn: "Id",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProgramingSkillsProject",
+                name: "ProgrammingSkills",
                 columns: table => new
                 {
-                    ProjectsID = table.Column<int>(type: "int", nullable: false),
-                    SkillsId = table.Column<int>(type: "int", nullable: false)
+                    SkillsID = table.Column<int>(type: "int", nullable: false),
+                    ProjectsID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProgramingSkillsProject", x => new { x.ProjectsID, x.SkillsId });
+                    table.PrimaryKey("PK_ProgrammingSkills", x => new { x.SkillsID, x.ProjectsID });
                     table.ForeignKey(
-                        name: "FK_ProgramingSkillsProject_ProgramingSkills_SkillsId",
-                        column: x => x.SkillsId,
+                        name: "FK_ProgrammingSkills_ProgramingSkills_SkillsID",
+                        column: x => x.SkillsID,
                         principalTable: "ProgramingSkills",
-                        principalColumn: "Id",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProgramingSkillsProject_Project_ProjectsID",
+                        name: "FK_ProgrammingSkills_Project_ProjectsID",
                         column: x => x.ProjectsID,
                         principalTable: "Project",
                         principalColumn: "ID",
@@ -250,15 +251,56 @@ namespace EndProject.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_EducationProgramingSkills_SkillsId",
-                table: "EducationProgramingSkills",
-                column: "SkillsId");
+            migrationBuilder.InsertData(
+                table: "ProgramingSkills",
+                columns: new[] { "ID", "Category", "Display", "KnownFrom", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Back end", true, new DateTime(2022, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3899), "C#" },
+                    { 2, "Front end", true, new DateTime(2021, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3905), "JavaScript" },
+                    { 3, "front end", true, new DateTime(2020, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3908), "PHP" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Project",
+                columns: new[] { "ID", "Description", "GitURL", "Name", "URL" },
+                values: new object[,]
+                {
+                    { 1, "finel", "https://github.com/jasmin289/EndProject", "End Project", "jkdjkdj" },
+                    { 2, "finel", "https://github.com/jasmin289/EndProject", "End Project", "jkdjkdj" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "User",
+                columns: new[] { "ID", "LastLogin", "Password", "Type", "UserName" },
+                values: new object[] { 1, new DateTime(2023, 7, 29, 16, 28, 24, 445, DateTimeKind.Local).AddTicks(3566), "1234", 999, "jasmin" });
+
+            migrationBuilder.InsertData(
+                table: "ProgrammingSkills",
+                columns: new[] { "ProjectsID", "SkillsID" },
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 1, 2 },
+                    { 2, 2 },
+                    { 1, 3 },
+                    { 2, 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProjectGallry",
+                columns: new[] { "ID", "Alt", "Description", "ProjectID", "Titel", "URL" },
+                values: new object[] { 1, "??", "nice pic", 1, "a pic of a dog", "https://picsum.photos/id/237/200/300" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProgramingSkillsProject_SkillsId",
-                table: "ProgramingSkillsProject",
-                column: "SkillsId");
+                name: "IX_EducationProgramingSkills_SkillsID",
+                table: "EducationProgramingSkills",
+                column: "SkillsID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProgrammingSkills_ProjectsID",
+                table: "ProgrammingSkills",
+                column: "ProjectsID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProjectGallry_ProjectID",
@@ -290,7 +332,7 @@ namespace EndProject.API.Migrations
                 name: "PersonalAttributes");
 
             migrationBuilder.DropTable(
-                name: "ProgramingSkillsProject");
+                name: "ProgrammingSkills");
 
             migrationBuilder.DropTable(
                 name: "ProjectGallry");
