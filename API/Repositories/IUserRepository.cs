@@ -1,4 +1,5 @@
-﻿using EndProject.API.Models.DTO;
+﻿using EndProject.API.Contexts;
+using EndProject.API.Models.DTO;
 using System.Linq.Expressions;
 
 namespace EndProject.API.Repositories
@@ -8,38 +9,139 @@ namespace EndProject.API.Repositories
         // we are build an reposotiry for only user. the reson we do this is 
         // becuse whaen we want to update only user we use this method
     }
-    public class UserRepository : IUserRepository
+    public class UserRepository : RepositoryBase<User>,IUserRepository
+    {
+        //and this class is implement the user repository
+        public UserRepository(MainContex _contex):base(_contex)
+        {
+            
+        }
+
+    }
+    public interface ICommunicationRepository : IReopsiteories<Communication>
+    {}
+    public class CommunicationRepository : RepositoryBase<Communication>, ICommunicationRepository
+    {
+       public CommunicationRepository(MainContex _contex) : base(_contex)
+        { }
+
+    }
+    public interface IEducationRepository : IReopsiteories<Education>
     {
 
-        //and this class is implement the user repository
-        public User Creat(User item)
+    }
+    public class EducationRepository : RepositoryBase<Education>, IEducationRepository
+    {
+      
+        public EducationRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
+
         }
 
-        public void Deleted(User item)
+    }
+    public interface IExperienceRepository : IReopsiteories<Experience>
+    {
+      
+    }
+    public class ExperienceRepository : RepositoryBase<Experience>, IExperienceRepository
+    {
+    
+        public ExperienceRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
+
         }
 
-        public IQueryable<User> FindAll()
+    }
+    public interface IGeneralRepository : IReopsiteories<General>
+    {
+        
+    }
+    public class GeneralRepository : RepositoryBase<General>, IGeneralRepository
+    {
+       
+        public GeneralRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
+
         }
 
-        public IQueryable<User> FindByCondision(Expression<Func<User, bool>> condision)
+    }
+    public interface IHobbyRepository : IReopsiteories<Hobby>
+    { }
+    public class HobbyRepository : RepositoryBase<Hobby>, IHobbyRepository
+    {
+        public HobbyRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
         }
 
-        public void Save()
+    }
+    public interface ILanguageRepository : IReopsiteories<Language>
+    {
+
+    }
+    public class LanguageRepository : RepositoryBase<Language>, ILanguageRepository
+    {
+      
+        public LanguageRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
+
         }
 
-        public User Update(User item)
+    }
+    public interface IPersonalAttributesRepository : IReopsiteories<PersonalAttributes>
+    {
+    }
+    public class PersonalAttributesRepository : RepositoryBase<PersonalAttributes>, IPersonalAttributesRepository
+    {
+        public PersonalAttributesRepository(MainContex _contex) : base(_contex)
         {
-            throw new NotImplementedException();
         }
+    }
+    public interface IProgramingSkillsRepository : IReopsiteories<ProgramingSkills>
+    {
+       
+    }
+    public class ProgramingSkillsRepository : RepositoryBase<ProgramingSkills>, IProgramingSkillsRepository
+    {
+        public ProgramingSkillsRepository(MainContex _contex) : base(_contex)
+        {
+
+        }
+
+    }
+    public interface IProjectRepository : IReopsiteories<Project>
+    {
+    }
+    public class ProjectRepository : RepositoryBase<Project>, IProjectRepository
+    {
+        public ProjectRepository(MainContex _contex) : base(_contex)
+        {
+
+        }
+
+    }
+    public interface IProjectGallryRepository : IReopsiteories<ProjectGallry>
+    {
+ 
+    }
+    public class ProjectGallryRepository : RepositoryBase<ProjectGallry>, IProjectGallryRepository
+    {
+        
+        public ProjectGallryRepository(MainContex _contex) : base(_contex)
+        {
+
+        }
+
+    }
+    public interface ISocialNetWorkRepository : IReopsiteories<User>
+    {
+    }
+    public class SocialNetWorkRepository : RepositoryBase<User>, ISocialNetWorkRepository
+    {
+      
+        public SocialNetWorkRepository(MainContex _contex) : base(_contex)
+        {
+
+        }
+
     }
 }
