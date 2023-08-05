@@ -1,12 +1,14 @@
 ﻿using EndProject.API.Contexts;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace EndProject.API.Repositories
 {
     public interface IReopsiteories<T>
     {
         IQueryable<T> FindAll();
-        IQueryable<T> FindByCondision();
+        IQueryable<T> FindByCondision(Expression<Func<T, bool>> condision);
 
         T Creat(T item);
         
@@ -16,16 +18,20 @@ namespace EndProject.API.Repositories
 
         void Save();
     }
-    public class RepositoryBase<T> : IReopsiteories<T>
+    public class RepositoryBase<T> : IReopsiteories<T>where T : class
     {
+        // T most be a type of class ,we can't put an int type - for example.
         private readonly MainContex _context;
         public RepositoryBase(MainContex _context)
         {
-            this._context = _context ?? throw new ArgumentNullException();
+            this._context = _context ?? throw new ArgumentNullException(nameof(_context));
         }
         public T Creat(T item)
         {
-            throw new NotImplementedException();
+            // find the table that you use and add this item
+            EntityEntry<T> newItem = _context.Set<T>().Add(item);
+            Save();
+            return newItem.Entity ;
         }
 
         public void Deleted(T item)
@@ -35,22 +41,27 @@ namespace EndProject.API.Repositories
 
         public IQueryable<T> FindAll()
         {
-            throw new NotImplementedException();
+           return _context.Set<T>();
         }
 
-        public IQueryable<T> FindByCondision()
+
+        // get a condision that come as an func and the find by this condision 
+        public IQueryable<T> FindByCondision(Expression<Func<T,bool>> condision)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Where(condision);
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
         public T Update(T item)
         {
-            throw new NotImplementedException();
+            EntityEntry<T> updateItem = _context.Set<T>().Update(item);
+            Save();
+            return updateItem.Entity ;
+
         }
     }
 }
