@@ -6,11 +6,13 @@ namespace EndProject.API.Contexts
 {
     public class MainContex : DbContext
     {
+        // this is structor
         public MainContex(DbContextOptions<MainContex> _options) : base(_options)
         {
 
         }
 
+        // this func is initialize the table in the data base with some data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,6 +37,8 @@ namespace EndProject.API.Contexts
                 new ProgramingSkills { ID = 1, Name = "C#", Category = "Back end", KnownFrom = DateTime.Now.AddYears(-1), Display = true },
                 new ProgramingSkills { ID = 2, Name = "JavaScript", Category = "Front end", KnownFrom = DateTime.Now.AddYears(-2), Display = true },
                 new ProgramingSkills { ID = 3, Name = "PHP", Category = "front end", KnownFrom = DateTime.Now.AddYears(-3), Display = true });
+
+            //this line is initilize the many to many table - with project and skills
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Skills)
