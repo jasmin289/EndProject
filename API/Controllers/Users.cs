@@ -3,22 +3,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EndProject.API.Controllers
 {
+
     [ApiController]
-    [Route("api/[Controller]")]
-    public class Users : Controller
+    [Route("[controller]")]
+
+
+    public class Users : ControllerBase
     {
         [HttpGet]
         public IActionResult GetUsers()
         {
             //TODO: only allow for admin user privileges
-            Users users = new Users();  
+            Users users = new Users();
             return Ok(users);
         }
 
-        [HttpGet]
-        public IActionResult GetUser(int id) {
+        [HttpGet("GetById")]
+        public IActionResult GetUserByID(int id)
+        {
             return Ok();
-          }
+        }
         [HttpPost]
         public IActionResult AddUsers(User users)
         {
@@ -36,6 +40,6 @@ namespace EndProject.API.Controllers
         {
             return Ok();
         }
-
     }
+
 }

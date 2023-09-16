@@ -1,5 +1,8 @@
 using EndProject.API.Contexts;
+using EndProject.API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API
 {
@@ -8,16 +11,33 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.Services.AddDbContext<MainContex>(o => {
                 o.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));
             });
             // Add services to the container.
+            builder.Services.AddScoped<IUserRepository,UserRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+            //use the appsetting.json 3:01 
+            //https:
+            //us06web.zoom.us/rec/play/sfio0gonHe0ZP2xzHYp9KJTn7qO7wK62JiWO8sRM6oMKbDkYO3VFd8NOhgS368JMQsM7ZqjCBOOL-Hg.K7HUy55pQnGaqz8E
+            builder.Services.AddAuthentication("Bearer").AddJwtBearer(o =>
+
+            o.TokenValidationParameters = new()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                ValidAudience = builder.Configuration["Authentication:Audience"]?? throw new ArgumentNullException("Authentication:Audience"),
+                ValidIssuer = builder.Configuration["Authentication:Issuer"]?? throw new ArgumentNullException("Authentication:Issuer"),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Authentication:Secret"] ?? throw new ArgumentNullException("Authentication:Issuer")))
+            });
 
             var app = builder.Build();
 
@@ -29,10 +49,13 @@ namespace API
             }
 
             // Configure the HTTP request pipeline.
-           
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-           
+            }
 
             app.UseHttpsRedirection();
 

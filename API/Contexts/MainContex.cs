@@ -76,5 +76,6 @@ namespace EndProject.API.Contexts
         public DbSet<User> User { get; set; }
 
 
+
     }
 }
