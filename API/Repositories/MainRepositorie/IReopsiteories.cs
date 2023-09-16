@@ -36,7 +36,9 @@ namespace EndProject.API.Repositories.MainRepositorie
 
         public void Deleted(T item)
         {
-            throw new NotImplementedException();
+            EntityEntry<T> newItem = _context.Set<T>().Remove(item);
+            Save();
+           
         }
 
         public IQueryable<T> FindAll()
