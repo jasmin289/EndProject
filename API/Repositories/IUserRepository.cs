@@ -8,7 +8,7 @@ namespace EndProject.API.Repositories
     public interface IUserRepository : IReopsiteories<User>
     {
         // we are build an reposotiry for only user. the reson we do this is 
-        // becuse whaen we want to update only user we use this method
+        // becuse when we want to update only user we use this method
     }
     public class UserRepository : RepositoryBase<User>,IUserRepository
     {

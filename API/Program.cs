@@ -16,8 +16,19 @@ namespace API
                 o.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));
             });
             // Add services to the container.
-            builder.Services.AddScoped<IUserRepository,UserRepository>();
-
+            builder.Services.AddScoped<ICommunicationRepository, CommunicationRepository>();
+            builder.Services.AddScoped<IEducationRepository, EducationRepository>();
+            builder.Services.AddScoped<IExperienceRepository,ExperienceRepository>();
+            builder.Services.AddScoped<IGeneralRepository,GeneralRepository>();
+            builder.Services.AddScoped<IHobbyRepository,HobbyRepository>();
+            builder.Services.AddScoped<ILanguageRepository,LanguageRepository>();
+            builder.Services.AddScoped<IPersonalAttributesRepository,PersonalAttributesRepository>();
+            builder.Services.AddScoped<IProgramingSkillsRepository,ProgramingSkillsRepository>();
+            builder.Services.AddScoped<IProjectRepository,ProjectRepository>();
+            builder.Services.AddScoped<IProjectGallryRepository,ProjectGallryRepository>();
+            builder.Services.AddScoped<ISocialNetWorkRepository,SocialNetWorkRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+          
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
