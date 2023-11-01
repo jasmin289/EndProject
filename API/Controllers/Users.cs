@@ -33,7 +33,7 @@ namespace EndProject.API.Controllers
             var result = userRepo.FindByCondision(c => c.ID == id).ToList();
             return Ok(result);
         }
-        [HttpPost]
+        [HttpPost("AddUser")]
         public IActionResult AddUsers(User users)
         {
             if(users == null)
