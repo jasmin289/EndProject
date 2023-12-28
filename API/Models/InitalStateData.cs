@@ -20,6 +20,7 @@ namespace EndProject.API.Models
         public List<ProjectGallry> ProjectGallry { get; private set; }
         public List<SocialNetWork> SocialNetWork { get; private set; }
         public List<User> users { get; private set; }
+        public List<Items> Items { get; private set; }
 
 
         internal static InitalStateData Create(
@@ -37,7 +38,8 @@ namespace EndProject.API.Models
             IProjectRepository projectRepository,
             IProjectGallryRepository projectGallryRepository,
             ISocialNetWorkRepository socialNetWorkRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IitemRepository ItemRepository)
         { 
             InitalStateData InitalStateData = new InitalStateData();
            
@@ -53,10 +55,12 @@ namespace EndProject.API.Models
             InitalStateData.ProjectGallry = projectGallryRepository.FindAll().ToList();
             InitalStateData.SocialNetWork = socialNetWorkRepository.FindAll().ToList();
             InitalStateData.users = userRepository.FindAll().ToList();
-           
+            InitalStateData.Items = ItemRepository.FindAll().ToList();
             return InitalStateData; 
 
 
         }
+
+     
     }
 }

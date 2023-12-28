@@ -74,6 +74,7 @@ namespace EndProject.API.Contexts
         public DbSet<Project> Project { get; set; }
         public DbSet<SocialNetWork> SocialNetWork { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Items> Items { get; set; }
 
 
 

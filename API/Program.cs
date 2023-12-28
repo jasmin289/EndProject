@@ -28,7 +28,9 @@ namespace API
             builder.Services.AddScoped<IProjectGallryRepository,ProjectGallryRepository>();
             builder.Services.AddScoped<ISocialNetWorkRepository,SocialNetWorkRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-          
+            builder.Services.AddScoped<IitemRepository, ItemRepository>();
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

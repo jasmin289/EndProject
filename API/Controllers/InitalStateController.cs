@@ -2,6 +2,8 @@
 using EndProject.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
+
+
 namespace EndProject.API.Controllers
 {
 
@@ -22,6 +24,7 @@ namespace EndProject.API.Controllers
         private readonly IProjectGallryRepository projectGallryRepository;
         private readonly ISocialNetWorkRepository socialNetWorkRepository;
         private readonly IUserRepository userRepository;
+        private readonly IitemRepository itemRepository;
         public InitalStateController(
             IConfiguration config,
             ICommunicationRepository CommunicationRepository,
@@ -35,7 +38,8 @@ namespace EndProject.API.Controllers
             IProjectRepository projectRepository,
             IProjectGallryRepository projectGallryRepository,
             ISocialNetWorkRepository socialNetWorkRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IitemRepository itemRepository
             )
         {
             this.config = config ?? throw new ArgumentNullException(nameof(config));
@@ -51,6 +55,7 @@ namespace EndProject.API.Controllers
             this.projectGallryRepository = projectGallryRepository ?? throw new ArgumentNullException(nameof(projectGallryRepository));
             this.socialNetWorkRepository = socialNetWorkRepository ?? throw new ArgumentNullException(nameof(socialNetWorkRepository));
             this.userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            this.itemRepository = itemRepository ?? throw new ArgumentNullException(nameof(itemRepository));
         }
         [HttpGet]
         public IActionResult GetAll()
@@ -68,8 +73,9 @@ namespace EndProject.API.Controllers
                 projectRepository,
                 projectGallryRepository,
                 socialNetWorkRepository,
-                userRepository
-                
+                userRepository,
+                itemRepository
+
               );
           
             return Ok(result);   
