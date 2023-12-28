@@ -1,16 +1,26 @@
 using EndProject.API.Contexts;
 using EndProject.API.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using System.Text;
 
 namespace API
 {
     public class Program
     {
+
+     
         public static void Main(string[] args)
         {
+            
+
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddCors();
+
+
 
             builder.Services.AddDbContext<MainContex>(o => {
                 o.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));
@@ -53,6 +63,13 @@ namespace API
             });
 
             var app = builder.Build();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
+
 
             //this code make sure that the DB is up to date every time the api start.
             using (var scop = app.Services.CreateScope())
