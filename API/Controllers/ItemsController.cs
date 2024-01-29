@@ -3,6 +3,8 @@ using EndProject.API.Models.DTO;
 using EndProject.API.Repositories;
 using Microsoft.AspNetCore.Cors;
 
+
+
 namespace EndProject.API.Controllers
 {
 
@@ -10,6 +12,7 @@ namespace EndProject.API.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
+       
         private readonly IConfiguration config;
         private readonly IitemRepository itemRepo;
         public ItemsController(IConfiguration _Config, IitemRepository _itemRepo)
@@ -26,15 +29,25 @@ namespace EndProject.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("getById/{id:int}")]
+        [HttpGet("getItemById/{id:int}")]
         public IActionResult GetItemByID(int id)
         {
             var result = itemRepo.FindByCondision(c => c.id == id).ToList();
             return Ok(result);
         }
-        [HttpPost("AddUser")]
+        [HttpPost("AddItem")]
+
+
         public IActionResult AddItem(Items item)
         {
+           
+
+            if (item.id == null || item.id == 0) {
+              var result = itemRepo.FindAll().ToList() ;
+              int last =   result.OrderByDescending(x => x.id).Select(x => x.id).FirstOrDefault();
+                item.id = ++last; 
+
+            }
             if (item == null)
             {
                 return BadRequest();
@@ -44,7 +57,7 @@ namespace EndProject.API.Controllers
             return Created("item",newItem);
         }
 
-        [HttpPut("update")]
+        [HttpPut("updateing")]
         public IActionResult UpDateItem(Items item)
         {
             if (item == null) BadRequest();

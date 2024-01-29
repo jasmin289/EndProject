@@ -10,17 +10,10 @@ namespace API
 {
     public class Program
     {
-
-     
         public static void Main(string[] args)
         {
-            
-
             var builder = WebApplication.CreateBuilder(args);
-
             builder.Services.AddCors();
-
-
 
             builder.Services.AddDbContext<MainContex>(o => {
                 o.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));

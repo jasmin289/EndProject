@@ -42,7 +42,7 @@ namespace EndProject.API.Controllers
             }
             var newUser =  userRepo.Creat(users);
 
-            return Created("user",newUser);
+            return Created("users",newUser);
         }
 
         [HttpPut("update")]

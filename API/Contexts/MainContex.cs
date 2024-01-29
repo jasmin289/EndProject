@@ -19,6 +19,10 @@ namespace EndProject.API.Contexts
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, UserName = "jasmin", Password = "1234", LastLogin = DateTime.Now, Type = UserType.Admin }
                 );
+
+            modelBuilder.Entity<Items>().HasData(
+              new Items { id = 4, ischecked =true, item= "new item" }
+              );
             modelBuilder.Entity<Project>().HasData(
                new Project { ID = 1, Name = "End Project", Description = "finel", URL = "jkdjkdj", GitURL = "https://github.com/jasmin289/EndProject" },
                new Project { ID = 2, Name = "End Project", Description = "finel", URL = "jkdjkdj", GitURL = "https://github.com/jasmin289/EndProject" }
